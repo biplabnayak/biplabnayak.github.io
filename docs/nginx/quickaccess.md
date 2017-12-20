@@ -22,7 +22,7 @@ So, you can use Regex to `proxy_pass` only those URIs, nginx will block all othe
 
     server {
         location ~ ^/(auth/realms/BrokerPortal/protocol|auth/realms/BrokerPortal/broker|auth/realms/BrokerPortal/login-actions|auth/realms/BrokerPortal/account)/ {
-        proxy_pass http://localhost:7379/;
+        proxy_pass http://localhost:8080/;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header Host $http_host;
         # Other Configurations
