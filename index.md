@@ -3,6 +3,7 @@ layout: default
 ---
 
 # Welcome
+This is more of a technical blog / cheat sheet, based on technologies I have worked on so far.
 
 ## Docker
 
@@ -15,4 +16,8 @@ layout: default
 
 ## NGINX
 
-*[NGINX Quick Access](docs/nginx/quickaccess.md)
+* [NGINX Quick Access](docs/nginx/quickaccess.md)
+
+## AWS
+
+* Lambda Functions
