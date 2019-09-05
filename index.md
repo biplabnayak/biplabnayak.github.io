@@ -2,9 +2,6 @@
 layout: default
 ---
 
-Trust your instinct .. not this blog..
-
-
 ## Docker
 
 * [Setting Up Docker](docs/docker/docker_setup.md)
