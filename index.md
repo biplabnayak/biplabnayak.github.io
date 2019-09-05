@@ -2,8 +2,8 @@
 layout: default
 ---
 
-# Welcome
-This is more of a technical blog / cheat sheet, based on technologies I have worked on so far.
+Trust your instinct .. not this blog..
+
 
 ## Docker
 
@@ -23,6 +23,9 @@ This is more of a technical blog / cheat sheet, based on technologies I have wor
 * [Setting Up Eureka Discovery Server](docs/microservices/service_discovery/eureka_server.md)
 * [Registering Services to Eureka Server](docs/microservices/service_discovery/registering_services.md)
 
-## AWS
+### Reactive Microservices
+* [Here is an example](https://github.com/n-reboot/product-service) (WIP)
 
-* Lambda Functions
+## Kubernetes
+* [Kubernetes Basics](docs/kubernetes/basics.md)
+* [Cheat Sheet](docs/kubernetes/basic_commands.md)

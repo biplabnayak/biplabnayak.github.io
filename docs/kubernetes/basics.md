@@ -17,6 +17,3 @@ Also includes higher leves abstraction called Controllers, such as :
 - StatefulSet
 - DaemonSet
 - Job
-
-
-

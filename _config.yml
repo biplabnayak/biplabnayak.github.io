@@ -1,5 +1,5 @@
 title: 3;p/>b
-description: Technical Blogs, Mostly on Java, Camel, Microservices, Docker, K8S...
+description: Technical Blogs, Mostly on Java, Apache Camel, Microservices, Docker, K8S...
 show_downloads: false
 google_analytics:
-theme: jekyll-theme-cayman
+theme: jekyll-theme-architect
