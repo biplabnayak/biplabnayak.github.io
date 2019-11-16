@@ -2,13 +2,13 @@
 
 ## Basic commands
 
-* Create a package.json
+**Create a package.json**
 
 npm init --yes  (For non interactive mode)
 
 npm init (for interactive mode)
 
-* Add dependency to package.json
+**Add dependency to package.json**
 
 npm install express
 
@@ -16,11 +16,11 @@ or
 
 npm i express
 
-* Add a Dev dependency
+**Add a Dev dependency**
 
 npm i -D nodemon
 
-* install package globally
+**install package globally**
 
 npm i -g create-react-app
 
@@ -47,4 +47,6 @@ Calculator : https://semver.npmjs.com/
 * enter credentials
 * create a package.json using `npm init` and provide the package name you want to publish
 * create index.js and export the function using module.exports
-![example](/images/nodejs/npm_package_export.png)
+
+![example]
+(/images/nodejs/npm_package_export.png)
