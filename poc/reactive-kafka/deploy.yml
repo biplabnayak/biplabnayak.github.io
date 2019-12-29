@@ -1,0 +1,82 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service
+spec:
+  selector:
+    matchLabels:
+      app: product-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: product-service
+    spec:
+      containers:
+        - name: product-service
+          image:
+          command: ["/bin/bash"]
+          args: ["-c" ""]
+          securityContext:
+            runAsUser: 13113
+            runAsGroup: 602
+          ports:
+            - containerPort: 8080
+              name: http
+          resources:
+            limits:
+              cpu: 1
+              memory: 6Gi
+              ephemeral-storage: 4Gi
+            requests:
+              cpu: 1
+              memory: 6Gi
+              ephemeral-storage: 4Gi
+          volumeMounts:
+            - name: web-xml
+              mountPath: /opt/tomcat/conf/web.xml
+              subPath: web.xml
+              readOnly: true
+          env:
+            - name: JAVA_OPTS
+              value: "-Xms512M -Xmx1G -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m"
+      volumes:
+        - name: web-xml
+          configMap:
+            name: web-xml
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-service
+  labels:
+    app: product-service
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    app: product-service
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: product-service
+spec:
+  rules:
+    - host: "product-service.n-reboot.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: product-service
+              servicePort: 80
+
+  tls:
+    - hosts:
+        - "product-service.n-reboot.com"

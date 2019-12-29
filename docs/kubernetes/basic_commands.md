@@ -1,23 +1,5 @@
 # Kubernetes cheat sheet
 
-## Minikube Commands
-
-###### Start minikube cluster
-```jshelllanguage
- minikube start --vm-driver=virtualbox
- ```
-
-###### Show Dashboard
-```jshelllanguage
-minikube dashboard
-```
-
-###### Stop minikube Cluster
-```jshelllanguage
-minikube stop
-```
-
-
 
 ## Kubernetes Cluster commands 
 
@@ -45,7 +27,6 @@ kubectl api-resources
 kubectl get all -n <namespace>
 ``` 
 
-
 ###### List all pods
 ```jshelllanguage
 kubectl get pods -n <namespace>
@@ -59,7 +40,8 @@ kubectl get pods -n <namespace>
     allow-ingress-to-helloworld-policy   app=helloworld   22h
 ```
 
- 
+###### Output Formats
+Kubernetes supports multiple output format such as :  yaml, json, wide, name, . You can use -o flag
  
  
 ## kubernetes Deployment Commands

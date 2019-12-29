@@ -11,6 +11,10 @@ layout: default
 
 * [MongoDB developer's cheat sheet](docs/mongo/developer_cheatsheet.md)
 
+## Apache Camel
+
+* [Camel-K](docs/camel/camel-k.md) - Cloud native camel
+
 ## NGINX
 
 * [NGINX Quick Access](docs/nginx/quickaccess.md)
