@@ -31,3 +31,129 @@ Analogous to a tablespace in Oracle.
 #### Partition
 
 #### Rows
+
+### Strategies for creating keyspace
+
+#### SimpleStrategy
+```jshelllanguage
+create keyspace <keyspace_name> with replication = {'class':'SipleStrategy', 'replication_factor': 3}
+```
+
+#### NetworkTopologyStrategy
+```jshelllanguage
+create keyspace <keyspace_name> with replication = {'class':'NetworkTopologyStrategy', 'DC1': 3, 'DC2': 1}
+```
+
+### Consistency
+#### Tunable Consistency - Write
+
+Write request to the cluster may received to any of the node in the cluster called "Coordinator node" for that write request.
+Write will be success / fail based on the consistency value.
+* ONE - At least one node acknowledged successful write.
+* TWO - At least two node acknowledged successful write.
+* THREE - At least three node acknowledged successful write.
+* QUORUM - Majority of the node responsible for the data acknowledged successful write.
+* ALL - All of the node responsible for the data acknowledged successful write.
+* ANY - If write make it to the cluster (even to the coordinator node), it is considered as success.
+
+##### Hinted Hand-off
+The coordinator node try to write the data to all the node responsible for storing(based on number of replicas). But if one of the node is down on unresponsive, the data will be written to coordinator node and it will retry the writes till its success.
+In the mean time if the coordinator node goes down, the Hinted Hand-off fails which results in data inconsistency between node. this inconsistency will be repaied during read. (Read repair)  
+#### Tunable Consistency - Read
+
+It determines how many nodes it will consult for the most current data before retiring the data.
+
+* ONE - one node will be consulted.
+* TWO - two one node will be consulted.
+* THREE - three one node will be consulted.
+* QUORUM - Majority of the node responsible for the data will be consulted.
+* ALL - All of the node responsible for the data will be consulted.
+* ANY - 
+
+##### Read Repair
+In case of data inconsistency, one of the done may return incorrect digest. in that case, coordinator node read data from all the nodes and get the most recent data and write it back to the node with incorrect data.
+
+It is advisable to use below command periodically to repair the inconsistency without waiting for the data to be read.
+```jshelllanguage
+nodetool repair
+``` 
+##### Strong Consistency
+(Write Consistency + Read Consistency) > Replication Factor
+
+eg.
+
+| Write Consistency | Read Consistency | Replication Factor | Strong Consistency |
+|-------------------|------------------|--------------------|-------------------|
+| ONE|QUORUM|3|NO|
+| ONE|ALL|3|YES|
+| ONE|ONE|3|NO|
+| QUORUM|QUORUM|3|YES|
+
+### Cassandra data types
+* Numeric
+
+| datatype | java equivalent |
+|----------|-----------------|
+| bigint | Long |
+| decimal | BigDecimal|
+| double | Double |
+| float | Float|
+| int | Integer |
+| varint | BigInteger | 
+
+* String
+
+| datatype | java equivalent | Description |
+|----------|-----------------|-------------|
+| ascii | String | US ASCII character string |
+| text | String | UTF-8 character String |
+| varchar | String | UTF-8 character String  (Synonym to text)|
+
+* Date
+
+1. timestamp - storing date and time
+2. timeuuid - Allows to store type 1 uuid which can be sorted based on date and time
+
+* Other
+
+1. boolean
+2. uuid
+3. inet - for IP Addresses
+4. blob - for binary data
+
+#### Counters
+
+```jshelllanguage
+cqlsh:poc> create table rating(product_id varchar PRIMARY KEY, rating_counter counter);
+cqlsh:poc> update rating set rating_counter = rating_counter+1 where product_id='abc-123';
+cqlsh:poc> select * from rating;
+
+ product_id | rating_counter
+------------+----------------
+    abc-123 |              1
+
+(1 rows)
+cqlsh:poc> update rating set rating_counter = rating_counter+1 where product_id='abc-123';
+cqlsh:poc> select * from rating;
+
+ product_id | rating_counter
+------------+----------------
+    abc-123 |              2
+
+(1 rows)
+```
+
+#### Naming constraints for keyspace, tables, and columns
+* no hyphen
+* no spaces
+* If starts with digit, surround with double quotes - "2015stats"
+* Mixed case, surround with double quote. Else considered as Small - "firstName"
+ 
+RULE OF THUMB - keep the name simple.
+
+### TTL
+
+`writetime` function returns the write time of the data in a column. Write time is stored for every cell in the column.
+![writetime function](/images/cassandra/write_time_function.png?raw=true)
+`token` function returns the token of the ID associated with the partition.
+![token function](/images/cassandra/token_function.png?raw=true)

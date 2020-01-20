@@ -30,3 +30,7 @@ layout: default
 ## Kubernetes
 * [Kubernetes Basics](docs/kubernetes/basics.md)
 * [Cheat Sheet](docs/kubernetes/basic_commands.md)
+
+## Apache Cassandra
+* [Concepts](docs/cassandra/concepts.md)
+* [Commands](docs/cassandra/commands.md)
