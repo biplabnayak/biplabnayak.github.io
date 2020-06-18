@@ -5,12 +5,18 @@ Details about regions: https://aws.amazon.com/about-aws/global-infrastructure/
 
 ### Terminologies
 * IAM (Identity and Access Management)
+* AZ (Availability Zone)
 * EC2 ()
-* EBS (Elastic Block Storage)
-* ELB (Elastic Load Balancer)
-* ASG (Auto Scaling Group)
+  * EBS (Elastic Block Storage)
+  * ELB (Elastic Load Balancer)
+  * ASG (Auto Scaling Group)
+  * Target Group
+  * Launch Configuration
+  * Launch Template
+  * Security Group
+  * Elastic IP
 * AMI (Amazon Machine Image)
-
+* RDS (Relational Database Service)
 
 # EC2
 ### Launch a new EC2 Instance
@@ -108,52 +114,88 @@ Run "sudo yum update" to apply all updates.
 
 ## EC2 Instance Launch Types
 
-* On demand instances
+* **On demand instances**
   - Pay for what you use
   - Bill per second, After first minute
   - Highest Cost
   - No upfront payment
   - No long term commitment
-  - **Recommended for short term, un-interrupted workload**
+  - *Recommended for short term, un-interrupted workload*
 
-* Reserved Instances
+* **Reserved Instances**
   - 75 % lesser cost compared to on-demand
   - Pay upfront for what you use with long term commitment
   - Reservation Period - 1 or 3 year
   - Reserve a specific instance
-  - **Recommended for steady state usage application. For Eg. Databases**
+  - *Recommended for steady state usage application. For Eg. Databases*
 
-* Convertible Reserved Instances
+* **Convertible Reserved Instances**
   - 54% less cost compare to on-demand
   - Can change the Instance type
 
-* Scheduled Reserved Instances
+* **Scheduled Reserved Instances**
   - Launch within the time window you reserve
-  - **Idle when you require for a fraction of a day/week/month.**
+  - *Idle when you require for a fraction of a day/week/month.*
 
-* Spot Instances
+* **Spot Instances**
   - Up to 90% lesser price compared to on-demand
   - Bid a price and get the instance as long as its under the price
   - Price varies based on demand and offer
   - You can lose an instance at any time with 2 minute notification (when spot price goes above the bid)
-  - **Can be used for batch jobs, Big data analytics, workload resilient to failure**
+  - *Can be used for batch jobs, Big data analytics, workload resilient to failure*
   - Not good for critical apps
     
-* Dedicated Hosts
+* **Dedicated Hosts**
   - Book Entire Physical Server
   - Full Control EC2 Instance placement
   - Visibility into underlying socket / physical cores of hardware
   - Allocated for your account for 3 years period reservation
-  - **More expensive**
+  - *More expensive*
   - Useful for
     *  Software with complicated licencing model
     * Companies having strong regulatory or compliance needs
     
-* Dedicated Instances
+* **Dedicated Instances**
   - Bit more restrictive then Dedicate Hosts
   - No Other customer share your hardware - hardware dedicate dto you
   - May share hardware with other instances in same account
   - No control over the hardware
   - No control over instance placement - can move hardware after Stop / Start
-  
+Here is the difference between Dedicate Instances Vs Dedicated Hosts.
+More details here : https://aws.amazon.com/ec2/dedicated-hosts
 ![Dedicate Instance Vs Dedicated Hosts](/images/aws/dedicate_instace.PNG?raw=true)
+
+## EC2 Pricing
+* EC2 instance price per hour depends on
+  * region
+  * instance type
+  * Launch Type
+  * OS (Linux vs Windows vs other)
+* Billed by second, with minimum 60 sec
+* pay for other factors like storage, Data Transfer, Fixed IP, Public Addresses, Load balancing etc
+* **You donot pay for the instance if instance is stopped**
+
+## EC2 AMI(Amazon Machine Image)
+* Base Image such as 
+  * Ubuntu
+  * Fedora
+  * RedHat
+  * Windows
+  * Amazon Linux
+* image can be customized at runtime using EC2 User Data
+* Custom AMI (Creating your own image)
+  * can be based on Linux or Windows
+  * Need :
+    * Pre-Installed package needed
+    * faster boot time (no need for ec2 user data at boot time)
+    * Machine comes with monitoring / Enterprise software
+    * Security concern - control over the machine in the network
+    * Someone else AMI optimized for running DB, APP etc..
+  * **AMI are built for a specific AWS Region**
+  
+## EC2 Instance Overview
+5 distinct characteristics
+* RAM (Type, Amount, Generation)
+* CPU (type, Make, frequency, generation, number of core)
+* I/O (Disk performance, EBS Optimization)
+* Instance type : More details : https://aws.amazon.com/ec2/instance-types/ , https://www.ec2instances.info/
