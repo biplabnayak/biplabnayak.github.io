@@ -87,7 +87,8 @@ Run "sudo yum update" to apply all updates.
 * One security group can be attached to multiple instances
 * Locked down to a region/VPC combination
 * You can also reference one security group other security group
- 
+
+More details here : https://cloudacademy.com/blog/aws-security-groups-instance-level-security/ 
 
 ![security_group](/images/aws/security_group.PNG?raw=true)
 
@@ -111,6 +112,15 @@ Run "sudo yum update" to apply all updates.
   - installing software
   - anything else ..
 * may impact  boot time
+
+## EC2 Instance Families
+* **Micro instances** - Low CPU and memory, Low cost, ideal for low throughput use cases and low traffic websites
+* **General Purpose** - Balanced CPU, memory and storage. Ideal for small, medium DB, test and dev servers and backend servers
+* **Compute Optimized** - high performance CPUs, used for high-performance front end servers, web servers, high-performance science and engineering applications and video encoding and batch processing
+* **GPU** -  optimized for graphic intensive applications.
+* **FPGA** - applications that use massively parallel processing power such as genomics and financial computing.
+* **Memory Optimized** -  large-scale enterprise class in-memory applications, such as performing real time processing of unstructured data 
+* **Storage Optimized** - SSD based storage for low latency and high IO. Good for Analytics and NoSQL Databases
 
 ## EC2 Instance Launch Types
 
@@ -199,3 +209,33 @@ More details here : https://aws.amazon.com/ec2/dedicated-hosts
 * CPU (type, Make, frequency, generation, number of core)
 * I/O (Disk performance, EBS Optimization)
 * Instance type : More details : https://aws.amazon.com/ec2/instance-types/ , https://www.ec2instances.info/
+
+## Storage options for EC2
+
+* Persistent Storage 
+  - Attaching EBS Volumes
+  - Can be encrypted
+  - Taken back up and stored in S3
+* Ephemeral Storage
+  - Physically Attached to EC2 underlying host
+  - Data will be lost EC2 instance terminated ot restarted
+  
+  
+## Getting Instance metadata from within  EC2 Instance
+
+1. curl -w "\n" http://169.254.169.254/latest/meta-data/
+   Note: The IP address used below (169.254.169.254) is a special use address to return metadata information tied to EC2 instances.
+
+
+2. Enter the following commands to extract specific metadata associated with your running instance: 
+
+$ curl -w "\n" http://169.254.169.254/latest/meta-data/security-groups
+$ curl -w "\n" http://169.254.169.254/latest/meta-data/ami-id
+$ curl -w "\n" http://169.254.169.254/latest/meta-data/hostname
+$ curl -w "\n" http://169.254.169.254/latest/meta-data/instance-id
+$ curl -w "\n" http://169.254.169.254/latest/meta-data/instance-type
+
+
+3. Enter the following command to get the public SSH key of the attached key pair using the public-keys metadata:
+
+curl -w "\n" http://169.254.169.254/latest/meta-data/public-keys/0/openssh-key
