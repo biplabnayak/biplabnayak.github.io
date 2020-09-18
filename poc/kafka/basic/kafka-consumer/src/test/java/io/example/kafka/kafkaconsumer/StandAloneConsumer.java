@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class StandAloneConsumer {
 
-    private static Consumer<Long, String> createConsumer() {
+    public static Consumer<Long, String> createConsumer() {
         final Properties props = new Properties();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
                 "localhost:9093,localhost:9094,localhost:9095");
@@ -24,7 +24,7 @@ public class StandAloneConsumer {
         final Consumer<Long, String> consumer =
                 new KafkaConsumer<Long, String>(props);
         // Subscribe to the topic.
-        consumer.subscribe(Collections.singletonList("test_topic"));
+        //consumer.subscribe(Collections.singletonList("test_topic"));
         return consumer;
     }
 
@@ -34,10 +34,11 @@ public class StandAloneConsumer {
         //consumer.poll(Duration.ofSeconds(1));
         //consumer.seekToBeginning(Arrays.asList(new TopicPartition("test_topic", 0)));
 
+
         while (true) {
             final ConsumerRecords<Long, String> consumerRecords =
                     consumer.poll(1000);
-            if (consumerRecords.count()==0) {
+            if (consumerRecords.count() == 0) {
                 noRecordsCount++;
                 if (noRecordsCount > giveUp) break;
                 else continue;

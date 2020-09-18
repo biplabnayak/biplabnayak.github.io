@@ -24,7 +24,7 @@ public class EventProducer {
     @Autowired
     KafkaTemplate<String, String> kafkaTemplate;
 
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 1000)
     public void produce() throws ExecutionException, InterruptedException {
 
         Map<String, Object> headers = new HashMap<>();
@@ -40,7 +40,7 @@ public class EventProducer {
 
         SendResult sendResult = (SendResult)listenableFuture.get();
         log.info("Produced message with | Offset : {} | Partition : {} | Timestamp : {}",
-                sendResult.getRecordMetadata().partition(), sendResult.getRecordMetadata().partition(),
+                sendResult.getRecordMetadata().offset(), sendResult.getRecordMetadata().partition(),
                 new Date(sendResult.getRecordMetadata().timestamp())
                 );
     }
