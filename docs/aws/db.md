@@ -5,12 +5,14 @@
    * MySQL
    * Maria DB
    * Postgres
-   * Amazon Aurora
+   * Amazon Aurora(mysql fork )
    * Oracle
    * SQL Server
 
 ### Instance Size
-rds_instanceType.PNG
+![RDS Instance size](/images/aws/db/rds_instanceType.PNG?raw=true)
+![RDS Instance size](/images/aws/db/rds_instanceSize.PNG?raw=true)
+https://aws.amazon.com/ec2/instance-types/
 
 ### Multi-AZ
 * Run RDS instance in one AZ (as primary) and second instance(as secondary) into another AZ in same region.
