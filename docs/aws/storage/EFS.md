@@ -8,7 +8,7 @@
 * **replicates data to multiple AZs. makes it more reliable and available.**
 * Its a regional service - any application deployments that span across multiple availability zones can all access the same file systems
 * Not all regions have this service. the available regions can be found here : https://docs.aws.amazon.com/general/latest/gr/rande.html#elasticfilesystem-region
-
+* does not support windows
 
 ## Storage Classes
 

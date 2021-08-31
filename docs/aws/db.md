@@ -66,6 +66,7 @@ https://aws.amazon.com/ec2/instance-types/
 # Dynamo DB
 * No-SQL DB(key Value Store) - managed by AWS
 * Schema less
+* writes are eventually consistent. reads can be strongly consistent or eventually consistent
 * Configuration options :
   * Table Name
   * Primary Key (Partition Key)
@@ -77,9 +78,18 @@ https://aws.amazon.com/ec2/instance-types/
 ### Secondary index
 * each query can only use one index. If you want to query and match on two different columns, you need to create an index that can do that properly. 
 * when you write your queries, you need to specify exactly which index should be used for each query. It's not like a relational database that has a query analyzer, which can decide which indexes to use for our query.
-* DynamoDB has two different kinds of secondary indexes
-   * global indexes - let you query across the entire table to find any record that matches a particular value
-   * local secondary indexes can only help find data within a single partition key.
+* DynamoDB has two different kinds of secondary indexes 
+#### global indexes
+* let you query across the entire table to find any record that matches a particular value
+* have to configure provisioned throughput for each Global secondary index
+* has separate storage then main table. has its own partition key.
+* it by default include all the attributes of main table which uses more storage and throughput. but if you want few attributes of the main table, you can project the attributes to the index
+* max 20 GSI can be added per table
+#### local secondary indexes
+* can only help find data within a single partition key
+* must be created when the table is created
+* max 5 LSI can be added per table
+* shares the throughput of the main table
    
 ### IOPs
 * Provisioned Mode :
@@ -89,9 +99,31 @@ https://aws.amazon.com/ec2/instance-types/
   * does not provision any RCUs or WCUs, instead they are scaled on demand
   * not as cost effective as provisioned
   * used if you do not know how much workload
+#### Read and Write Capacity units (RCU / WCU)
+* 1 RCU = 1 item upto 4KB with String consistency
+* Large records cost 1 RCU per 4KB
+* Eventual consistent reads costs half
 
+* 1 WCU = 1 item upto 1KB each seconds
 Image ref: dynamo_db_iops_ondemand.PNG
   
+### Queries and Scans
+#### Query
+* Search the table with single partition key
+* can filter using sort keys (=, <, >, begins with)
+* can be filtered on any attribute
+* consumes less read capacity units as fetch by partition kay and sort / filter by sort key or other attribute
+#### Scans
+* searches across all partition keys
+* filtered by any attribute
+* can not be ordered
+* eventual consistent
+* can run in parallel from multiple thread or server  for example : Amazon elastic map reduce can do a parallel scan on dynamoDB
+* consumes more read capacity units(RCU) as it scans all the records of the table
+### Partitioning
+* As table grows , table gets splits into multiple partitions. Partitions are not visible on console or API.
+* Number of partition depends on size of the table, provisioned IOPs 
+* IOPs get evenly distributed between each partitions. so we need to dicede on a good partition key that can get the data distributed evenly across partitions
 ### Advantages :
 * fully managed
 * schema less
@@ -103,6 +135,7 @@ Image ref: dynamo_db_iops_ondemand.PNG
 * Less flexible queries compared to SQL
 * Workflow Limitation - Max record size : 400 KB | max indexes per table : 20 global, 5 Secondary
 * Provisioned throughput
+* no date datatype
 
 ### HA Configurations
 * designed to autometically partition data and incoming traffic across multiple partitions

@@ -6,5 +6,6 @@
 * 
 
 ## AWS Fargate
+AWS Fargate is a serverless compute service that removes the need to provision and manage Amazon Elastic Compute Cloud (Amazon EC2), a web service that provides secure, resizable compute capacity in the cloud.
 
 ## Redshift

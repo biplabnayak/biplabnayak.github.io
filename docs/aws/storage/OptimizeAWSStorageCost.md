@@ -19,7 +19,7 @@ some of these storage classes have a tiered pricing structure.
 
 For All other storage classes, pricing is FLAT.
 
-![S3 All Other Pricing](/images/aws/s3/s3_all_other pricing.png?raw=true)
+![S3 All Other Pricing](/images/aws/s3/s3_all_other%20pricing.png?raw=true)
 
 
 Using the right storage class is one way to optimize your costs. But, You should also be familiar with :
